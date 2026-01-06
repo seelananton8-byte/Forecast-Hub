@@ -3,15 +3,14 @@ import { IoSearch } from "react-icons/io5";
 import WeatherDetails from "./WeatherDetails"
 import { Fragment, useEffect, useState } from "react";
 import { weatherIconMap } from "../utils/weatherIconMap";
-import clearIcon from "../assets/clear.jpg";
-import snowIcon from "../assets/snow.png";
+import clearIcon from "../assets/01d.png";
 
 function Weather() {
   const API_KEY = import.meta.env.VITE_WEATHER_API_KEY;
   const BASE_URL = import.meta.env.VITE_BASE_URL;
 
   const [text, setText] = useState("Chennai");
-  const [icon, setIcon] = useState(snowIcon);
+  const [icon, setIcon] = useState();
   const [temp, setTemp] = useState(0);
   const [city, setCity] = useState("");
   const [country, setCountry] = useState("");
