@@ -18,7 +18,7 @@ function WeatherDetails({ icon, temp, city, country, lat, log, humidity, wind })
              <span>{lat}</span>
           </div>
           <div>
-             <span className="lat">latitude</span>
+             <span className="lat">longitude</span>
              <span>{log}</span>
           </div>
         </div>

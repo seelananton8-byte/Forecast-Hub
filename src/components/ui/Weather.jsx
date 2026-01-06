@@ -1,10 +1,10 @@
-import WeatherSkeleton from "./services/WeatherSkeleton";
-import { UI_TEXT } from "./constants/strings";
+import WeatherSkeleton from "../services/WeatherSkeleton";
+import { UI_TEXT } from "../constants/strings";
 import { IoSearch } from "react-icons/io5";
 import WeatherDetails from "./WeatherDetails"
 import { Fragment, useEffect, useState } from "react";
-import { weatherIconMap } from "../utils/weatherIconMap";
-import clearIcon from "../assets/01d.png";
+import { weatherIconMap } from "../../utils/weatherIconMap";
+import clearIcon from "../../assets/01d.png";
 
 function Weather() {
   const API_KEY = import.meta.env.VITE_WEATHER_API_KEY;
