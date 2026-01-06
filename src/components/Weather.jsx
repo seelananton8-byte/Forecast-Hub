@@ -1,3 +1,4 @@
+import WeatherSkeleton from "./services/WeatherSkeleton";
 import { UI_TEXT } from "./constants/strings";
 import { IoSearch } from "react-icons/io5";
 import WeatherDetails from "./WeatherDetails"
@@ -77,11 +78,12 @@ function Weather() {
             </div>
         </div>
 
-           {loading && <div className="loading-message">{UI_TEXT.LOADING}</div>}
+           {/* {loading && <div className="loading-message">{UI_TEXT.LOADING}</div>} */}
+           {loading && <WeatherSkeleton />}
            {error && <div className="error-mess">{error}</div>}
            {cityNotFound && <div className="city-not-found">{UI_TEXT.CITY_NOT_FOUND}</div>}
 
-           {!loading && !cityNotFound ? 
+           {!loading && !cityNotFound && !error ?
            (
            <WeatherDetails icon={icon} temp={temp} city={city} 
            country={country}  lat={lat} log={log}
