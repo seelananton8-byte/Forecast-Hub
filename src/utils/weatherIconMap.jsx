@@ -13,7 +13,7 @@ import thundersstormIcon from "../assets/10n.png"
 import snowIcon from "../assets/13d.png";
 import snowsIcon from "../assets/13n.png";
 import mistIcon from "../assets/50d.png";
-import mistsIcon from "../assets/50n.png"
+import mistsIcon from "../assets/50n.png";
 
 export const weatherIconMap = {
   "01d": clearIcon,

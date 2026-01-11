@@ -19,11 +19,16 @@ function Weather() {
   const [log, setLog] = useState(0);
   const [humidity, setHumidity] = useState(0);
   const [wind, setWind] = useState(0);
-  const [cityNotFound, setCityNotFound] = useState(false)
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(null)
-
+  const [cityNotFound, setCityNotFound] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [suggestions, setSuggestions] = useState([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [isFirstLoad, setIsFirstLoad] = useState(true)
+  
   const search = async() => {
+    setShowSuggestions(false)
+    setSuggestions([]) 
     setLoading(true) 
 
     const url = `${BASE_URL}weather?q=${text}&appid=${API_KEY}&units=Metric`
@@ -55,9 +60,26 @@ function Weather() {
     }
   }
 
+  const fetchCitySuggestions = async(value) => {
+    if (!value) {
+      setSuggestions([])
+      setShowSuggestions(false)
+      return
+    }
+    try {
+      const res = await fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${value}&limit=5&appid=${API_KEY}`)
+      const data = await res.json()
+      setSuggestions(data)
+      setShowSuggestions(true)
+    }catch(error) {
+      console.error(error)
+    }
+  }
+
   const handleCity = (e) => {
     setText(e.target.value)
   }
+  
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
       search()
@@ -67,6 +89,20 @@ function Weather() {
   useEffect(() => {
     search()
   }, [])
+
+  useEffect(() => {
+  if (isFirstLoad) {
+    setIsFirstLoad(false)
+    return 
+  }
+
+  const timer = setTimeout(() => {
+    fetchCitySuggestions(text)
+  }, 500)
+
+  return () => clearTimeout(timer)
+}, [text])
+
   return (
     <Fragment>
         <div className="container">
@@ -74,11 +110,27 @@ function Weather() {
             <input type="text" className="cityInput" placeholder="Search City"
              onChange={handleCity} value={text}  onKeyDown={handleKeyDown}/>
             <div className="search-icon">
-            <IoSearch  className="img" onClick={() => search()} />
+               <IoSearch  className="img" onClick={() => search()} />
             </div>
-        </div>
+            {showSuggestions && suggestions.length > 0 && (
+                <ul className="suggestions">
+                  {suggestions.map((item, index) => (
+                    <li
+                    key={index}
+                    onClick={() => {
+                      setText(item.name)
+                      setSuggestions([])   
+                      setShowSuggestions(false)
+                      search()
+                    }}
+                    >
+                      {item.name}, {item.country}
+                    </li>
+                  ))}
+                </ul>
+            )}
+          </div>
 
-           {/* {loading && <div className="loading-message">{UI_TEXT.LOADING}</div>} */}
            {loading && <WeatherSkeleton />}
            {error && <div className="error-mess">{error}</div>}
            {cityNotFound && <div className="city-not-found">{UI_TEXT.CITY_NOT_FOUND}</div>}
@@ -95,7 +147,6 @@ function Weather() {
             </p>
       </div>    
     </Fragment>
-  );
+  )
 }
-
-export default Weather;
+export default Weather

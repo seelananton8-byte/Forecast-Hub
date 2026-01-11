@@ -25,13 +25,43 @@ body{
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
-.input-container{
+ .input-container {
   width: 100%;
   display: flex;
   align-items: center;
   border: 2px solid #70e6f3;
   border-radius: var(--padding-sm);
-  overflow: hidden;
+  position: relative;   
+  overflow: visible;  
+}
+.suggestions {
+  position: absolute;
+  top: 100%;          
+  left: 0;
+  right: 0;
+  background: #fff;
+  border-radius: 10px;
+  margin-top: 6px;
+  padding: 0;
+  list-style: none;
+  max-height: 220px;
+  overflow-y: auto;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+  z-index: 9999;
+}
+
+.suggestions li {
+  padding: 12px;
+  cursor: pointer;
+  font-size: 14px;
+  border-bottom: 1px solid #eee;
+}
+
+.suggestions li:hover {
+  background: #f1f1f1;
+}
+.suggestions{
+  position: absolute;
 }
 .cityInput{
   flex: 1;
